@@ -128,10 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GrowthCalculator.cpp" />
+    <ClCompile Include="InputMenu.cpp" />
     <ClCompile Include="Main_Interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GrowthCalculator.h" />
+    <ClInclude Include="InputMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
