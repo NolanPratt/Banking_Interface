@@ -3,18 +3,19 @@
  * Banking Interface
  * CS 210
  * Nolan Pratt
- * 11/14/2022
+ * 11/27/2022
  *
  * This program funcitons as a banking interface for the user 
  * to access and manage their financial plans through the 
- * generated menu options.
+ * generated input menu. The current, core functionality  
+ * allows a user to calculate compounding interest within 
+ * an account based on the entered parameters.
  * 
  */
 
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <vector>
 #include "GrowthCalculator.h"
 
 using namespace std;
@@ -27,9 +28,13 @@ void FillColumns(char c, size_t n) {
 	}	
 }
 
-// Rounds inputted double to n decimal places
-double RoundDouble(double num, double n = 0.01) {
-	return round(num / n) * n;
+// Corrects string capitalization for easier input validation
+string caseCorrection(string input) {
+	string newString;
+	for (char character : input) {
+		newString += toupper(character);
+	}
+	return newString;
 }
 
 // Displays the input menu and final results table
@@ -55,7 +60,7 @@ vector<double> InputMenuDisplay() {
 	FillColumns('|', 1);
 
 	// Get monthDepo
-	cout << "Monthly Deposit: $";
+	cout << "Monthly Deposit: $"; 
 	cin >> monthDepo;
 	investmentData.push_back(monthDepo);
 	FillColumns('|', 1);
@@ -67,7 +72,7 @@ vector<double> InputMenuDisplay() {
 	FillColumns('|', 1);
 
 	// Get numYears
-	cout << "Number of months: ";
+	cout << "Number of years: ";
 	cin >> numYears;
 	investmentData.push_back(numYears);
 
@@ -76,8 +81,8 @@ vector<double> InputMenuDisplay() {
 	FillColumns('*', 82);
 	cout << endl;
 
-	// Display header
-	FillColumns(' ', 1);
+	// Display results header
+	FillColumns(' ', 2);
 	cout << "Accrued Balance with Interest by Year";
 	FillColumns(' ', 3);
 	cout << "-without deposits-";
@@ -93,32 +98,50 @@ vector<double> InputMenuDisplay() {
 // Enter main driver
 int main() {
 
-	/* Create 2 objects to represent the set of standard growth without *
-	 * deposits and the set of growth with deposits						*/
-	GrowthCalculator StdGrowth;
-	GrowthCalculator GrowthWithMonthlyDeposits;
+	// Variable to check for program continuation
+	string userInput = "yes";
 
-	// Declare investment vector and gather elements
-	vector<double> investments = InputMenuDisplay(); // Ex: { 500.0, 50.0, 5.0, 10.0 }
+	// While loop to prompt user for program continuation
+	while (caseCorrection(userInput) != "NO") {
 
-	// Calculate standard growth and growth with deposits into representative variables
-	vector<double> results = StdGrowth.CalculateStdGrowth(investments);
-	vector<double> depositGrowthResults = GrowthWithMonthlyDeposits.CalculateGrowthWithDeposits(investments);
+		/* Create 2 objects to represent the set of standard growth without *
+		 * deposits and the set of growth with deposits						*/
+		GrowthCalculator StdGrowth;
+		GrowthCalculator GrowthWithMonthlyDeposits;
 
-	// Iterates through calculatiosn and displays corresponding numbers
-	for (int year = 0; year < results.size(); year++) {
-		cout << fixed << setprecision(2) << endl;
-		FillColumns(' ', 4);
-		cout << "Year " << year;
-		FillColumns(' ', (10-(to_string(year).length()))); //34
-		FillColumns('-', 3);
-		FillColumns('>', 1);
-		FillColumns(' ', 20);
-		cout << RoundDouble(results[year]);
-		FillColumns(' ', (24 - (to_string(results[year]).length())));
-		cout << RoundDouble(depositGrowthResults[year]) << endl;
+		// Declare investment vector and gather elements
+		vector<double> investments = InputMenuDisplay(); // Ex: { 500.0, 50.0, 5.0, 10.0 }
+
+		// Calculate standard growth and growth with deposits into representative variables
+		vector<double> results = StdGrowth.CalculateStdGrowth(investments);
+		vector<double> depositGrowthResults = GrowthWithMonthlyDeposits.CalculateGrowthWithDeposits(investments);
+
+		// Iterates through calculatiosn and displays corresponding numbers
+		for (int year = 0; year < results.size(); year++) {
+			// Formatting doubles for aligning number columns
+			cout << fixed << setprecision(2) << endl;
+			FillColumns(' ', 4);
+			// Row titled by year
+			cout << "Year " << year;
+			FillColumns(' ', (10 - (to_string(year).length())));
+			// Pointer
+			FillColumns('-', 3); FillColumns('>', 1); FillColumns(' ', 20);
+			// Std growth numbers
+			cout << results[year];
+			// Separating space
+			FillColumns(' ', (24 - (to_string(results[year]).length())));
+			// Growth with deposit numbers
+			cout << depositGrowthResults[year] << endl;
+		}
+		// Display results footer
+		FillColumns('=', 82);
+
+		// Check for program continuation
+		cout << "\n\nEnter \"Yes\" to continue";
+		cout << "\nEnter \"No\" to exit the program\n";
+		cin >> userInput;
+		cout << endl;
 	}
-	FillColumns('=', 82);
 
 	return 0;
 }

@@ -7,7 +7,6 @@ class GrowthCalculator {
 public:
 	vector<double> CalculateStdGrowth(vector<double> dataSet);
 	vector<double> CalculateGrowthWithDeposits(vector<double> dataSet);
-	double YearsToMonths(double numYears);
 	GrowthCalculator();
 private:
 	double initAmount;
