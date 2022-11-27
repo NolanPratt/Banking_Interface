@@ -11,6 +11,7 @@ public:
 	vector<double> InputMenuDisplay();
 	double TypeCheck();
 	double LengthCheck(double val);
+	double ValCheck(double val);
 	void DisplayResults(vector<double> stdGrowth, vector<double> growthWithDeposits);
 	void FillColumns(char c, size_t n);
 	UserDisplay();

@@ -21,24 +21,28 @@ vector<double> UserDisplay::InputMenuDisplay() {
 	// Get initAmount with validation
 	cout << "Initial Investment: $";
 	initAmount = TypeCheck();
+	ValCheck(initAmount);
 	investmentData.push_back(initAmount);
 	FillColumns('|', 1);
 
 	// Get monthlyDepo with validation
 	cout << "Monthly Deposit: $";
 	monthlyDepo = TypeCheck();
+	ValCheck(monthlyDepo);
 	investmentData.push_back(monthlyDepo);
 	FillColumns('|', 1);
 
 	// Get annualInt with validation
 	cout << "Annual Interest: %";
 	annualInt = TypeCheck();
+	ValCheck(annualInt);
 	investmentData.push_back(annualInt);
 	FillColumns('|', 1);
 
 	// Get numYears with validation
 	cout << "Number of years: ";
 	numYears = TypeCheck();
+	ValCheck(numYears);
 	investmentData.push_back(numYears);
 
 	FillColumns('-', 37);
@@ -76,7 +80,7 @@ double UserDisplay::TypeCheck() {
 		}
 	}
 	catch (...) {
-		cout << "\nInvalid data entry" << endl;
+		cout << "\n\nInvalid data entry" << endl;
 		exit(-99);
 	}
 	return val;
@@ -94,6 +98,19 @@ double UserDisplay::LengthCheck(double val) {
 		exit(-98);
 	}
 	return val;
+}
+
+// Checks input to ensure non-negative values
+double UserDisplay::ValCheck(double val) {
+	try {
+		if (val < 0) {
+			throw(val);
+		}
+	}
+	catch (...) {
+		cout << "\n\nInvalid entry: input must be non-negative" << endl;
+		exit(-97);
+	}
 }
 
 // Displays calculation results in formatted table of doubles
