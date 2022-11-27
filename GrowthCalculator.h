@@ -2,7 +2,6 @@
 #include <vector>
 using namespace std;
 
-// Header for GrowthCalculator class
 class GrowthCalculator {
 public:
 	vector<double> CalculateStdGrowth(vector<double> dataSet);
