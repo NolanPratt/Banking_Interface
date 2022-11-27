@@ -78,7 +78,7 @@ vector<double> InputMenuDisplay() {
 
 	FillColumns('-', 37);
 	cout << endl;
-	FillColumns('*', 82);
+	FillColumns('*', 111);
 	cout << endl;
 
 	// Display results header
@@ -88,11 +88,38 @@ vector<double> InputMenuDisplay() {
 	cout << "-without deposits-";
 	FillColumns(' ', 4);
 	cout << "-with deposits-";
-	FillColumns(' ', 2);
+	FillColumns(' ', 4);
+	cout << "-accrued through deposits-";
 	cout << endl;
-	FillColumns('=', 82);
+	FillColumns('=', 111);
 
 	return investmentData;
+}
+
+void DisplayResults(vector<double> stdGrowth, vector<double> growthWithDeposits) {
+	// Iterates through calculations and displays corresponding numbers
+	for (int year = 0; year < stdGrowth.size(); year++) {
+		// Formatting doubles for aligning number columns
+		cout << fixed << setprecision(2) << endl;
+		FillColumns(' ', 4);
+		// Row titled by year
+		cout << "Year " << year;
+		FillColumns(' ', (10 - (to_string(year).length())));
+		// Pointer
+		FillColumns('-', 3); FillColumns('>', 1); FillColumns(' ', 20);
+		// Std growth numbers
+		cout << stdGrowth[year];
+		// Separating space
+		FillColumns(' ', (26 - (to_string(stdGrowth[year]).length())));
+		// Growth with deposit numbers
+		cout << growthWithDeposits[year];
+		// Separating space
+		FillColumns(' ', (23 - (to_string(growthWithDeposits[year]).length())));
+		// Displaying difference in growth with vs without deposits
+		cout << growthWithDeposits[year] - stdGrowth[year] << endl;
+	}
+	// Display results footer
+	FillColumns('=', 111);
 }
 
 // Enter main driver
@@ -113,28 +140,11 @@ int main() {
 		vector<double> investments = InputMenuDisplay(); // Ex: { 500.0, 50.0, 5.0, 10.0 }
 
 		// Calculate standard growth and growth with deposits into representative variables
-		vector<double> results = StdGrowth.CalculateStdGrowth(investments);
+		vector<double> stdResults = StdGrowth.CalculateStdGrowth(investments);
 		vector<double> depositGrowthResults = GrowthWithMonthlyDeposits.CalculateGrowthWithDeposits(investments);
 
-		// Iterates through calculatiosn and displays corresponding numbers
-		for (int year = 0; year < results.size(); year++) {
-			// Formatting doubles for aligning number columns
-			cout << fixed << setprecision(2) << endl;
-			FillColumns(' ', 4);
-			// Row titled by year
-			cout << "Year " << year;
-			FillColumns(' ', (10 - (to_string(year).length())));
-			// Pointer
-			FillColumns('-', 3); FillColumns('>', 1); FillColumns(' ', 20);
-			// Std growth numbers
-			cout << results[year];
-			// Separating space
-			FillColumns(' ', (24 - (to_string(results[year]).length())));
-			// Growth with deposit numbers
-			cout << depositGrowthResults[year] << endl;
-		}
-		// Display results footer
-		FillColumns('=', 82);
+		// Displays the calculated results in a table of values
+		DisplayResults(stdResults, depositGrowthResults);
 
 		// Check for program continuation
 		cout << "\n\nEnter \"Yes\" to continue";
