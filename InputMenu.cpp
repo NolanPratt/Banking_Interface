@@ -1,6 +1,6 @@
 #include "InputMenu.h"
 
-UserDisplay::UserDisplay() {
+InputMenu::InputMenu() {
 	investmentData;
 	initAmount = -1;
 	monthlyDepo = -1;
@@ -9,7 +9,7 @@ UserDisplay::UserDisplay() {
 }
 
 // Displays the input menu and final results table
-vector<double> UserDisplay::InputMenuDisplay() {
+vector<double> InputMenu::InputMenuDisplay() {
 	FillColumns('*', 37);
 	cout << endl;
 	FillColumns('-', 8);
@@ -68,7 +68,7 @@ vector<double> UserDisplay::InputMenuDisplay() {
 }
 
 // Checks the input data type
-double UserDisplay::TypeCheck() {
+double InputMenu::TypeCheck() {
 	double val;
 	try {
 		cin >> val;
@@ -87,7 +87,7 @@ double UserDisplay::TypeCheck() {
 }
 
 // Checks the calculated val to ensure proper runtime
-double UserDisplay::LengthCheck(double val) {
+double InputMenu::LengthCheck(double val) {
 	try {
 		if (to_string(val).length() >= 20) {
 			throw(val);
@@ -101,7 +101,7 @@ double UserDisplay::LengthCheck(double val) {
 }
 
 // Checks input to ensure non-negative values
-double UserDisplay::ValCheck(double val) {
+double InputMenu::ValCheck(double val) {
 	try {
 		if (val < 0) {
 			throw(val);
@@ -114,7 +114,7 @@ double UserDisplay::ValCheck(double val) {
 }
 
 // Displays calculation results in formatted table of doubles
-void UserDisplay::DisplayResults(vector<double> stdGrowth, vector<double> growthWithDeposits) {
+void InputMenu::DisplayResults(vector<double> stdGrowth, vector<double> growthWithDeposits) {
 	// Iterates through calculations and displays corresponding numbers
 	for (int year = 0; year < stdGrowth.size(); year++) {
 		// Formatting doubles for aligning number columns
@@ -143,7 +143,7 @@ void UserDisplay::DisplayResults(vector<double> stdGrowth, vector<double> growth
 }
 
 // Generates borders with n columns for menu display
-void UserDisplay::FillColumns(char c, size_t n) {
+void InputMenu::FillColumns(char c, size_t n) {
 	for (size_t i = 0; i < n; i++) {
 		cout << c;
 	}

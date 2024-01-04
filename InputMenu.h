@@ -6,7 +6,7 @@
 #include <vector>
 using namespace std;
 
-class UserDisplay {
+class InputMenu {
 public:
 	vector<double> InputMenuDisplay();
 	double TypeCheck();
@@ -14,7 +14,7 @@ public:
 	double ValCheck(double val);
 	void DisplayResults(vector<double> stdGrowth, vector<double> growthWithDeposits);
 	void FillColumns(char c, size_t n);
-	UserDisplay();
+	InputMenu();
 private:
 	vector<double> investmentData;
 	double initAmount;

@@ -38,7 +38,7 @@ int main() {
 	while (caseCorrection(userInput) != "NO") {
 
 		// Create object to represent instance menu for user data gathering
-		UserDisplay dataSet;
+		InputMenu dataSet;
 
 		/* Create 2 objects to represent the set of standard growth without *
 		 * deposits and the set of growth with deposits						*/

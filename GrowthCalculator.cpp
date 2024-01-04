@@ -8,8 +8,6 @@ GrowthCalculator::GrowthCalculator() {
 	yearlyGrowth;
 }
 
-/* Calculates the annual growth with deposits based on entered parameters *
- * returns each yearly increase as an ascending double vector             */
 vector<double> GrowthCalculator::CalculateGrowthWithDeposits(vector<double> dataSet) {
 	// Gather data set into discrete variables
 	initAmount = dataSet[0];
@@ -18,15 +16,13 @@ vector<double> GrowthCalculator::CalculateGrowthWithDeposits(vector<double> data
 	numYears = dataSet[3];
 
 	// Declare summation variables for use in iteration
-	double growthWithDeposits = 0.0;
-	double deposits = 0.0;
+	double growthWithDeposits = initAmount + monthlyDepo;
 
 	// Enter iteration to calculate each year's investment growth
 	for (double year = 0; year <= numYears; year++) {
-		growthWithDeposits = ((initAmount + deposits) * (pow((1.0 + ((annualInt / 100.0) / 12.0)), year * 12.0)));
-		// Accounting for monthly deposits
-		for (double month = 1; month <= 12; month++) {
-			deposits += monthlyDepo;
+		if (year > 0) {
+			// Yearly increase	  // Interest on current years earnings		 // Sum of deposits		// Interest on deposits
+			growthWithDeposits += (growthWithDeposits * (annualInt / 100)) + (monthlyDepo * 12.0) + (monthlyDepo * (annualInt / 100));
 		}
 		yearlyGrowth.push_back(growthWithDeposits);
 	}
@@ -42,10 +38,11 @@ vector<double> GrowthCalculator::CalculateStdGrowth(vector<double> dataSet) {
 	numYears = dataSet[3];
 
 	// Declare summation variable for use in iteration
-	double stdGrowth = 0.0;
+	double stdGrowth = initAmount;
 
 	for (double year = 0; year <= numYears; year++) {
-		stdGrowth = (initAmount * (pow((1.0 + ((annualInt / 100.0) / 12.0)), year * 12.0)));
+		if (year > 0)
+			stdGrowth += stdGrowth * (annualInt / 100);
 		yearlyGrowth.push_back(stdGrowth);
 	}
 	return yearlyGrowth;
